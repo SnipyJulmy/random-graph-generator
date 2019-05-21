@@ -40,7 +40,6 @@ class RandomGraphGenerator(val minVertices: Int, val maxVertices: Int,
         j = r.nextInt(g.maxNodesCapacity)
       } while (i != j && g.areConnected(i, j))
       g.addEdge(i, j, 2)
-      println(s"add cycle with $i -- $j")
     }
   }
 
