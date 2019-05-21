@@ -28,12 +28,22 @@ class RandomGraphGenerator(val minVertices: Int, val maxVertices: Int,
     val g = new Graph(nbNodesToGenerate)
     g.addNode(0)
     genNodes(g, mutable.Queue(0), nbNodesToGenerate)
+    genCycle(g)
     g
   }
 
-
-  def genCycle(g: Graph): Unit = {
-    // TODO
+  // to gen a cycle, we pick n times 2 nodes that are not connected and connect them
+  def genCycle(g: Graph, n: Int = 1): Unit = {
+    for (_ <- 0 until n) {
+      var i = 0
+      var j = 0
+      do {
+        i = r.nextInt(g.maxNodesCapacity)
+        j = r.nextInt(g.maxNodesCapacity)
+      } while (i != j && g.areConnected(i, j))
+      g.addEdge(i, j, 2)
+      println(s"add cycle with $i -- $j")
+    }
   }
 
   def genNodes(graph: Graph, crtLeaves: mutable.Queue[Int], remainingPlace: Int): Unit =
