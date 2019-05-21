@@ -23,8 +23,6 @@ class RandomGraphGenerator(val minVertices: Int, val maxVertices: Int,
     """.stripMargin
     )
 
-    val nodes: Array[Boolean] = Array.fill(nbNodesToGenerate)(false)
-
     val g = new Graph(nbNodesToGenerate)
     g.addNode(0)
     genNodes(g, mutable.Queue(0), nbNodesToGenerate)
