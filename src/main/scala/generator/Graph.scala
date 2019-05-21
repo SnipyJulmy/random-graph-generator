@@ -5,8 +5,7 @@ import scala.language.postfixOps
 
 class Graph(val maxNodesCapacity: Int) {
 
-
-  private val data: Array[Array[Int]] = Array.ofDim(maxNodesCapacity, maxNodesCapacity)
+  private val data: Array[Array[Int]] = Array.fill(maxNodesCapacity, maxNodesCapacity)(0)
   private var _nbNodes: Int = 0
   private var _nbEdges: Int = 0
 
@@ -17,7 +16,7 @@ class Graph(val maxNodesCapacity: Int) {
     _nbNodes += 1
   }
 
-  def addEdge(from: Int, to: Int): Unit = {
+  def addEdge(from: Int, to: Int, weight : Int = 1): Unit = {
     data(from)(to) = 1
     data(to)(from) = 1
     _nbEdges += 1
@@ -44,6 +43,8 @@ class Graph(val maxNodesCapacity: Int) {
       if data(i)(i) == 1
     } yield i
   } toList
+
+  def areConnected(i: Int, j: Int): Boolean = data(i)(j) != 0
 
   // generate a dot graph
   def toDot: String =
