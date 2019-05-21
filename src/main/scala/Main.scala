@@ -8,7 +8,7 @@ object Main extends App {
   val minDegree = 1
   val maxDegree = 3
 
-  val graphGenerator = new RandomGraphGenerator(minVertices, maxVertices, minEdges, maxEdges, minDegree, maxDegree, false)
+  val graphGenerator = new RandomGraphGenerator(minVertices, maxVertices, minEdges, maxEdges, minDegree, maxDegree, true)
 
   println(graphGenerator.nextGraph().toDot)
 }

@@ -16,9 +16,9 @@ class Graph(val maxNodesCapacity: Int) {
     _nbNodes += 1
   }
 
-  def addEdge(from: Int, to: Int, weight : Int = 1): Unit = {
-    data(from)(to) = 1
-    data(to)(from) = 1
+  def addEdge(from: Int, to: Int, weight: Int = 1): Unit = {
+    data(from)(to) = weight
+    data(to)(from) = weight
     _nbEdges += 1
   }
 
@@ -32,7 +32,7 @@ class Graph(val maxNodesCapacity: Int) {
       i <- 0 until maxNodesCapacity
       j <- 0 until maxNodesCapacity
       if i < j
-      if data(i)(j) == 1
+      if areConnected(i, j)
     } yield (i, j)
   } toList
 
@@ -40,7 +40,7 @@ class Graph(val maxNodesCapacity: Int) {
   def nodes: List[Int] = {
     for {
       i <- 0 until maxNodesCapacity
-      if data(i)(i) == 1
+      if areConnected(i, i)
     } yield i
   } toList
 
@@ -50,7 +50,10 @@ class Graph(val maxNodesCapacity: Int) {
   def toDot: String =
     s"""
        |graph g$maxNodesCapacity {
-       |${edges map tupled((a, b) => s"""\t"$a" -- "$b"""") mkString "\n"}
+       |${
+      edges map tupled((a, b) =>
+        s"""\t"$a" -- "$b" [color=${if (data(a)(b) == 1) "black" else "red"}]""") mkString "\n"
+    }
        |}
   """.stripMargin
 

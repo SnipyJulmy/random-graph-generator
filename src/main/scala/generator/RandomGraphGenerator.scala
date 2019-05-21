@@ -26,7 +26,9 @@ class RandomGraphGenerator(val minVertices: Int, val maxVertices: Int,
     val g = new Graph(nbNodesToGenerate)
     g.addNode(0)
     genNodes(g, mutable.Queue(0), nbNodesToGenerate)
-    genCycle(g)
+    if (withCycle) {
+      genCycle(g)
+    }
     g
   }
 
@@ -40,6 +42,7 @@ class RandomGraphGenerator(val minVertices: Int, val maxVertices: Int,
         j = r.nextInt(g.maxNodesCapacity)
       } while (i != j && g.areConnected(i, j))
       g.addEdge(i, j, 2)
+      println(s"create cycle with $i -- $j")
     }
   }
 
