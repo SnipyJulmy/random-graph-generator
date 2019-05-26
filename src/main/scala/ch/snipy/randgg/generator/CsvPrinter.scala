@@ -13,11 +13,30 @@ class CsvPrinter(config: Config) {
 
   // dump the adjacency matrix into a csv file
   def dump(graph: Graph, filename: String, withCycle: Boolean): Unit = {
-    println(s"dump $filename into ${if (withCycle) withCycleOutputDirectory.getPath else withoutCycleOutputDirectory.getPath}")
+
+    val outputDirectoryName = s"${
+      if (withCycle) withCycleOutputDirectory.getAbsolutePath
+      else withoutCycleOutputDirectory.getAbsolutePath
+    }"
+    val outputFilename = s"$outputDirectoryName/${config.filePrefix}_$filename.csv"
+    val outputFile = mkFile(outputFilename)
+
+    println(s"dump $filename into ${outputFile.getPath}")
   }
 
+
+  private def mkFile(filename: String): File = mkFile(new File(filename))
   private def checkDir(directory: String): File = checkDir(new File(directory))
   private def mkDir(directory: String): File = mkDir(new File(directory))
+
+  private def mkFile(file: File): File = {
+    if (file.exists()) throw new IOException(s"${file.getPath} already exists")
+    if (!file.createNewFile()) throw new IOException(s"can't create ${file.getPath}")
+    assert(file.exists())
+    assert(file.canWrite)
+    assert(file.canRead)
+    file
+  }
 
   private def mkDir(directory: File): File = {
     assert(!directory.exists())
