@@ -3,6 +3,7 @@ package ch.snipy.randgg.generator
 import java.io.{File, IOException}
 
 import ch.snipy.randgg.Config
+import com.github.tototoshi.csv.CSVWriter
 
 class CsvPrinter(config: Config) {
 
@@ -22,6 +23,10 @@ class CsvPrinter(config: Config) {
     val outputFile = mkFile(outputFilename)
 
     println(s"dump $filename into ${outputFile.getPath}")
+
+    val writer = CSVWriter.open(outputFile)
+    writer.writeAll(graph.adjacencyMatrix)
+    writer.close()
   }
 
 

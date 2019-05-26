@@ -9,6 +9,8 @@ class Graph(val maxNodesCapacity: Int) {
   private var _nbNodes: Int = 0
   private var _nbEdges: Int = 0
 
+  def adjacencyMatrix: Seq[Seq[Int]] = data.map(_.toSeq).toSeq
+
   def isFull: Boolean = _nbNodes == maxNodesCapacity
 
   def addNode(idx: Int): Unit = {
