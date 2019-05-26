@@ -1,5 +1,6 @@
 package ch.snipy.randgg.generator
 
+import scala.language.implicitConversions
 import scala.util.Random
 
 object Utils {
@@ -19,4 +20,7 @@ object Utils {
       (l.head, l.tail)
     }
   }
+
+  implicit def Array2D2Seq2D(input: Array[Array[Int]]): Seq[Seq[Int]] =
+    input.map(_.toSeq).toSeq
 }
