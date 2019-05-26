@@ -1,4 +1,4 @@
-package generator
+package ch.snipy.randgg.generator
 
 import scala.Function._
 import scala.language.postfixOps
