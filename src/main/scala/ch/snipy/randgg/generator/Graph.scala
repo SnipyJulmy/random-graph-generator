@@ -1,5 +1,7 @@
 package ch.snipy.randgg.generator
 
+import ch.snipy.randgg.generator.Utils._
+
 import scala.Function._
 import scala.language.postfixOps
 
@@ -9,7 +11,21 @@ class Graph(val maxNodesCapacity: Int) {
   private var _nbNodes: Int = 0
   private var _nbEdges: Int = 0
 
-  def adjacencyMatrix: Seq[Seq[Int]] = data.map(_.toSeq).toSeq
+  def adjacencyMatrix: Seq[Seq[Int]] = data
+
+
+  // generate all the permutations of the matrix
+  def adjacencyPermutations: Iterator[Seq[Seq[Int]]] = {
+    val orig = (0 until _nbNodes).toList
+    for {
+      p <- orig.permutations
+      m = permute(orig, p)
+    } yield Utils.Array2D2Seq2D(m)
+  }
+
+  def permute(orig: List[Int], p: List[Int]): Array[Array[Int]] = {
+    ???
+  }
 
   def isFull: Boolean = _nbNodes == maxNodesCapacity
 
