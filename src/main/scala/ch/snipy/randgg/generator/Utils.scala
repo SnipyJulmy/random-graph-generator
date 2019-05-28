@@ -21,9 +21,6 @@ object Utils {
     }
   }
 
-  implicit def Array2D2Seq2D[A](input: Array[Array[A]]): Seq[Seq[A]] =
-    input.map(_.toSeq).toSeq
-
   implicit def Iterator2List[A](input: Iterator[A]): List[A] =
     input.toList
 }

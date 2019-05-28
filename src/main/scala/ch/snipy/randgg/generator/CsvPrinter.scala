@@ -19,13 +19,13 @@ class CsvPrinter(config: Config) {
       if (withCycle) withCycleOutputDirectory.getAbsolutePath
       else withoutCycleOutputDirectory.getAbsolutePath
     }"
-    val outputFilename = s"$outputDirectoryName/${config.filePrefix}_$filename.csv"
+    val outputFilename = s"$outputDirectoryName/${config.filePrefix}$filename.csv"
     val outputFile = mkFile(outputFilename)
 
     println(s"dump $filename into ${outputFile.getPath}")
 
     val writer = CSVWriter.open(outputFile)
-    writer.writeAll(graph.adjacencyMatrix)
+    writer.writeAll(graph.adjacencyMatrix.toSeq.map(_.toSeq))
     writer.close()
   }
 

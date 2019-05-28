@@ -11,8 +11,7 @@ class Graph(val maxNodesCapacity: Int) {
   private var _nbNodes: Int = 0
   private var _nbEdges: Int = 0
 
-  def adjacencyMatrix: Seq[Seq[Int]] = data
-
+  def adjacencyMatrix: Array[Array[Int]] = data
 
   // generate all the permutations of the matrix
   def adjacencyPermutations: Iterator[Seq[Seq[Int]]] = {
@@ -20,10 +19,10 @@ class Graph(val maxNodesCapacity: Int) {
     for {
       p <- orig.permutations
       m = permute(orig, p)
-    } yield Utils.Array2D2Seq2D(m)
+    } yield m.map(_.toSeq).toSeq
   }
 
-  def permute(orig: List[Int], p: List[Int]): Array[Array[Int]] = {
+  private def permute(orig: List[Int], p: List[Int]): Array[Array[Int]] = {
     ???
   }
 
