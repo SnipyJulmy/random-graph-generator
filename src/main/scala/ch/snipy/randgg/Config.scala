@@ -11,6 +11,7 @@ case class Config(nbGraphToGenerate: Int = Config.Default.nbGraphToGenerate,
                   maxDegreePerNodes: Int = Config.Default.maxDegreePerNodes,
                   generatePermutation: Boolean = Config.Default.generatePermutation,
                   withWithoutCycleProportion: Double = Config.Default.withWithoutCycleProportion,
+                  nbCycleMax: Int = Config.Default.nbCycleMax,
                   outputDirectory: File = Config.Default.outputDirectory,
                   overwriteExistingOutput: Boolean = Config.Default.overwriteExistingOutput,
                   filePrefix: String = Config.Default.filePrefix) {
@@ -39,5 +40,6 @@ object Config {
     val outputDirectory: File = new File(outputDirectoryPath)
     val overwriteExistingOutput: Boolean = true
     val filePrefix: String = ""
+    val nbCycleMax: Int = 1
   }
 }

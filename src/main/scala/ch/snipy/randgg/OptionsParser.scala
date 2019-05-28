@@ -33,9 +33,17 @@ class OptionsParser extends scopt.OptionParser[Config]("random-graph-ch.snipy.ra
     .action((v, config) => config.copy(maxDegreePerNodes = v))
     .text(s"minimum degree of a node [default : ${Config.Default.maxDegreePerNodes}]")
 
-  opt[Double]('p', "cycle-proportion")
+  opt[Double]("cycle-proportion")
     .action((v, config) => config.copy(withWithoutCycleProportion = v))
     .text(s"proportion of graph with and without cycle [default : ${Config.Default.withWithoutCycleProportion}]")
+
+  opt[Int]("max-cycle")
+    .action((v, config) => config.copy(nbCycleMax = v))
+    .text(s"maximum number of cycle a graph can have [default : ${Config.Default.nbCycleMax}]")
+
+  opt[Boolean]('p', "permutations")
+      .action((v,config) => config.copy(generatePermutation = v))
+      .text(s"indicates if the permutations have to be generated or not")
 
   opt[File]('o', "otuput-directory")
     .required()
