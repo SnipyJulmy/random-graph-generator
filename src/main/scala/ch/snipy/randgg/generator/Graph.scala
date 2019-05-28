@@ -1,11 +1,11 @@
 package ch.snipy.randgg.generator
 
-import ch.snipy.randgg.generator.Utils._
-
 import scala.Function._
 import scala.language.postfixOps
+import scala.util.Random
 
 class Graph(val maxNodesCapacity: Int) {
+
 
   private val data: Array[Array[Int]] = Array.fill(maxNodesCapacity, maxNodesCapacity)(0)
   private var _nbNodes: Int = 0
@@ -14,16 +14,39 @@ class Graph(val maxNodesCapacity: Int) {
   def adjacencyMatrix: Array[Array[Int]] = data
 
   // generate all the permutations of the matrix
-  def adjacencyPermutations: Iterator[Seq[Seq[Int]]] = {
+  def permutations: Iterator[Graph] = {
     val orig = (0 until _nbNodes).toList
     for {
       p <- orig.permutations
-      m = permute(orig, p)
-    } yield m.map(_.toSeq).toSeq
+      g = permute(orig, p)
+    } yield g
   }
 
-  private def permute(orig: List[Int], p: List[Int]): Array[Array[Int]] = {
-    ???
+  def nextPermutation: Graph = {
+    val r = new Random
+    val orig = (0 until _nbNodes).toList
+    val p = r.shuffle(orig)
+    println(s"permutation is $p")
+    permute(orig, p)
+  }
+
+  // generate a permuted matrix given the permuted indices list
+  def permute(originalIndices: List[Int], permutedIndices: List[Int]): Graph = {
+    val res = new Graph(maxNodesCapacity)
+    val map: Map[Int, Int] = (permutedIndices zip originalIndices).toMap
+    for {
+      i <- 0 until maxNodesCapacity
+      j <- 0 until maxNodesCapacity
+      if i <= j
+    } {
+      if (i == j) addNode(i)
+      else {
+        val v = data(map(j))(map(i))
+        if (v == 1) res.addEdge(i, j)
+        if (v == 2) res.addEdge(i, j, 2)
+      }
+    }
+    res
   }
 
   def isFull: Boolean = _nbNodes == maxNodesCapacity

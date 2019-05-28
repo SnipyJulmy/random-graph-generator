@@ -9,6 +9,7 @@ case class Config(nbGraphToGenerate: Int = Config.Default.nbGraphToGenerate,
                   maxEdgesCount: Int = Config.Default.maxEdgesCount,
                   minDegreePerNodes: Int = Config.Default.minDegreePerNodes,
                   maxDegreePerNodes: Int = Config.Default.maxDegreePerNodes,
+                  generatePermutation: Boolean = Config.Default.generatePermutation,
                   withWithoutCycleProportion: Double = Config.Default.withWithoutCycleProportion,
                   outputDirectory: File = Config.Default.outputDirectory,
                   overwriteExistingOutput: Boolean = Config.Default.overwriteExistingOutput,
@@ -32,6 +33,7 @@ object Config {
     val maxEdgesCount: Int = 200
     val minDegreePerNodes: Int = 2
     val maxDegreePerNodes: Int = 4
+    val generatePermutation: Boolean = false
     val withWithoutCycleProportion: Double = 0.5
     val outputDirectoryPath: String = "./gen-graphs"
     val outputDirectory: File = new File(outputDirectoryPath)

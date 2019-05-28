@@ -14,5 +14,8 @@ object Main extends App {
   }
   val graphGenerator = new RandomGraphGenerator(config)
 
-  graphGenerator.generateGraphs()
+  val g = graphGenerator.nextGraph(true)
+  println(g.toDot)
+  val gp = g.nextPermutation
+  println(gp.toDot)
 }

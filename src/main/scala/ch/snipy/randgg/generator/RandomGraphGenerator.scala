@@ -13,17 +13,29 @@ class RandomGraphGenerator(config: Config) {
   def generateGraphs(): Unit = {
     for (i <- 0 to config.nWith) {
       val g = nextGraph(true)
-      csvPrinter.dump(g, s"graph_$i", withCycle = true)
+      if (config.generatePermutation) {
+        for ((p, idx) <- g.permutations.zipWithIndex) {
+          csvPrinter.dump(p, s"graph_${i}_p_$idx", withCycle = true)
+        }
+      } else
+        csvPrinter.dump(g, s"graph_$i", withCycle = true)
     }
     for (i <- 0 to config.nWithout) {
       val g = nextGraph(false)
-      csvPrinter.dump(g, s"graph_$i", withCycle = false)
+      if (config.generatePermutation) {
+        for ((p, idx) <- g.permutations.zipWithIndex) {
+          csvPrinter.dump(p, s"graph_${i}_p_$idx", withCycle = false)
+        }
+      } else
+        csvPrinter.dump(g, s"graph_$i", withCycle = false)
     }
   }
 
   def nextGraph(withCycle: Boolean): Graph = {
     val nbNodesToGenerate: Int = r.nextInRange(config.nodesArg)
     val nbEdges: Int = r.nextInRange(config.edgesArg)
+
+    println(s"generate a random graph with $nbNodesToGenerate nodes and $nbEdges edges")
 
     val g = new Graph(nbNodesToGenerate)
     g.addNode(0)
@@ -42,7 +54,7 @@ class RandomGraphGenerator(config: Config) {
       do {
         i = r.nextInt(g.maxNodesCapacity)
         j = r.nextInt(g.maxNodesCapacity)
-      } while (i != j && g.areConnected(i, j))
+      } while (i == j || g.areConnected(i, j))
       g.addEdge(i, j, 2)
     }
   }
